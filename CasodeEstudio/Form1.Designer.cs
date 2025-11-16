@@ -149,6 +149,7 @@
             this.btnMostrarGrafo.TabIndex = 2;
             this.btnMostrarGrafo.Text = "Mostrar Conexiones";
             this.btnMostrarGrafo.UseVisualStyleBackColor = true;
+            this.btnMostrarGrafo.Click += new System.EventHandler(this.btnMostrarGrafo_Click);
             // 
             // lbGrafo
             // 
@@ -180,6 +181,7 @@
             this.btnRuta.TabIndex = 6;
             this.btnRuta.Text = "Mejor ruta";
             this.btnRuta.UseVisualStyleBackColor = true;
+            this.btnRuta.Click += new System.EventHandler(this.btnRuta_Click);
             // 
             // lbRuta
             // 

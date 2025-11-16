@@ -22,11 +22,6 @@ namespace CasodeEstudio
             ActualizarTreeView();
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-
-        }
-
         private void btnAñadir_Click(object sender, EventArgs e)
         {
             if (!tbElementos.Text.Contains(","))
@@ -66,7 +61,61 @@ namespace CasodeEstudio
 
         private void btnAgregarC_Click(object sender, EventArgs e)
         {
-            
+            string texto = tbConexion.Text;
+            if (!texto.Contains(","))
+            {
+                MessageBox.Show("Formato inválido. Use: Origen,Destino,Distancia");
+                return;
+            }
+            var partes = texto.Split(',');
+            if (partes.Length != 3)
+            {
+                MessageBox.Show("Debe utilizar el formato: A,B,120");
+                return;
+            }
+            string origen = partes[0].Trim();
+            string destino = partes[1].Trim();
+            int distancia;
+
+            if (!int.TryParse(partes[2].Trim(), out distancia))
+            {
+                MessageBox.Show("La distancia debe ser un número entero.");
+                return;
+            }
+            grafo.AgregarConexion(origen, destino, distancia);
+            MessageBox.Show("Conexión Agregada");
+            tbConexion.Clear();
+        }
+
+        private void btnMostrarGrafo_Click(object sender, EventArgs e)
+        {
+            lbGrafo.Items.Clear();
+            foreach (var nodo in grafo.ObtenerMapa())
+            {
+                foreach (var (dest, dist) in nodo.Value)
+                {
+                    lbGrafo.Items.Add($"{nodo.Key} -> {dest} ({dist} m)");
+                }
+            }
+        }
+
+        private void btnRuta_Click(object sender, EventArgs e)
+        {
+            string inicio = tbInicio.Text.Trim();
+            string fin = tbFin.Text.Trim();
+            if (inicio == "" || fin == "")
+            {
+                MessageBox.Show("Debe ingresar un nodo inicial y final.");
+                return;
+            }
+            var ruta = grafo.MejorRuta(inicio, fin);
+            lbRuta.Items.Clear();
+            foreach (var p in ruta)
+                lbRuta.Items.Add(p);
+        }
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 }
